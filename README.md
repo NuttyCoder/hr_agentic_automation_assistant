@@ -1,160 +1,175 @@
 # HR Agentic Automation Assistant
-The HR Agentic Automation Assistant is a fully integrated, AI-powered automation platform that demonstrates how modern HR organizations can leverage LLMs, agentic decision-making, Python microservices, and RPA-style automation to streamline employee support.
-Inspired by platforms like Moveworks, Automation Anywhere, and ServiceNow, this project showcases how conversational AI can autonomously complete HR tasks such as PTO requests, profile updates, and ticket creation — all while maintaining enterprise-level governance, auditability, and security.
-This project was designed to demonstrate senior-level capability in AI systems engineering, workflow automation, enterprise integration, and human-centered design.
-# Project Goals:
+
+An AI-powered HR automation platform demonstrating how modern HR organizations can leverage large language models, agentic decision-making, Python microservices, and RPA-style automation to streamline employee support.
+
+This portfolio project simulates end-to-end enterprise HR automation: from conversational intent parsing to multi-step orchestrations that call microservices and RPA bots while enforcing governance, PII masking, and auditability.
+
+---
+
+## Table of contents
+- [Project Goals](#project-goals)
+- [Core Features](#core-features)
+- [Example Workflows](#example-workflows)
+  - [PTO Request](#pto-request)
+  - [Update Address (Multi-step)](#update-address-multi-step-agentic-flow)
+- [System Architecture](#system-architecture)
+- [Tech Stack](#tech-stack)
+- [Repository Structure](#repository-structure)
+- [Quickstart](#quickstart)
+- [Included Documentation](#included-documentation)
+- [Demo Script (For Recruiters & Hiring Managers)](#demo-script-for-recruiters--hiring-managers)
+- [Why This Project Matters](#why-this-project-matters)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Project Goals
 This project was built to:
-• 	Demonstrate mastery of LLM-driven conversational interfaces
-• 	Show how to design agentic workflows that make autonomous decisions
-• 	Integrate with mock HR systems (ServiceNow-like, SuccessFactors-like)
-• 	Simulate RPA bots for legacy system automation
-• 	Implement Python microservices for HR data operations
-• 	Showcase data governance, PII masking, and audit logging
-• 	Provide a realistic example of enterprise HR automation
-# Core Features
+- Demonstrate mastery of LLM-driven conversational interfaces
+- Show how to design agentic workflows that make autonomous decisions
+- Integrate with mock HR systems (ServiceNow-like, SuccessFactors-like)
+- Simulate RPA bots for legacy system automation
+- Implement Python microservices for HR data operations
+- Showcase data governance, PII masking, and audit logging
+- Provide a realistic example of enterprise HR automation
+
+## Core Features
 1. Conversational AI Interface
-• 	Natural language understanding
-• 	Intent classification
-• 	Entity extraction
-• 	Clarification questions
-• 	JSON-structured responses for downstream automation
+   - Natural language understanding
+   - Intent classification
+   - Entity extraction
+   - Clarification questions
+   - JSON-structured responses for downstream automation
+
 2. Agentic Workflow Orchestrator
-• 	Multi-step workflow execution
-• 	Tool selection and routing
-• 	Error handling + retry logic
-• 	Escalation to HR when automation fails
-• 	Config-driven behavior for HR admins
+   - Multi-step workflow execution
+   - Tool selection and routing
+   - Error handling + retry logic
+   - Escalation to HR when automation fails
+   - Config-driven behavior for HR admins
+
 3. Python Automation Microservices
-• 	FastAPI-based service layer
-• 	Endpoints for:
-• 	PTO balance lookup
-• 	Address updates
-• 	Ticket creation
-• 	SQLite-backed HR database
-• 	Role-based access control
-• 	Audit logging for every action
+   - FastAPI-based service layer
+   - Endpoints for PTO balance lookup, address updates, ticket creation
+   - SQLite-backed HR database
+   - Role-based access control and audit logging
+
 4. RPA Simulation Layer
-• 	Python-based “bots” that mimic Automation Anywhere
-• 	Simulated login + screen scraping
-• 	Delayed execution to reflect real RPA behavior
-• 	Logging of bot actions and outcomes
+   - Python-based “bots” that mimic RPA behavior
+   - Simulated login, screen scraping, and delayed execution
+   - Bot action logging and outcome tracking
+
 5. HR System Integrations (Mocked)
-• 	ServiceNow-style ticketing system
-• 	SuccessFactors-style employee profile system
-• 	REST API endpoints for all operations
-• 	Realistic data models and workflows
+   - ServiceNow-style ticketing
+   - SuccessFactors-like employee profile system
+   - Realistic REST APIs and data models
+
 6. Governance & Security
-• 	PII masking in logs
-• 	Role-based access (Employee vs HR Admin)
-• 	Configurable automation rules
-• 	Full audit trail of all actions
-# System Architecture
+   - PII masking in logs
+   - Role-based access (Employee vs HR Admin)
+   - Configurable automation rules
+   - Full audit trail of actions
 
-High-Level Architecture Diagram (Text Version)
+## Example Workflows
 
-🔄 Example Workflow: PTO Request
-User:
-“Can you tell me how much PTO I have left?”
-System Flow:
-1. 	Conversational AI → identifies intent: 
-2. 	Orchestrator → selects PTO workflow
-3. 	Microservice → queries employee PTO balance
-4. 	Orchestrator → formats response
-5. 	Chat layer → returns answer to user
-6. 	Audit log → records the entire workflow
-Result:
-A fully automated, traceable, conversational HR interaction.
+### PTO Request
+User: “Can you tell me how much PTO I have left?”
 
-#Example Workflow: Update Address (Multi-Step Agentic Flow)
-User:
-“I moved — update my address to 123 Main St.”
-System Flow:
-1. 	LLM extracts:
-• 	intent: 
-• 	entity: 
-2. 	Orchestrator:
-• 	Validates address format
-• 	Calls HR microservice to update DB
-• 	Calls RPA bot to update legacy system
-• 	Confirms success
-3. 	Logs:
-• 	User ID
-• 	Systems touched
-• 	PII masked
-• 	Timestamp
-• 	Success/failure
-Result:
-A realistic simulation of enterprise HR automation with both API and RPA components.
+Flow:
+1. Conversational AI identifies intent
+2. Orchestrator selects PTO workflow
+3. Microservice queries PTO balance
+4. Orchestrator formats response
+5. Chat layer returns answer
+6. Audit log records the interaction
 
-#Tech Stack
-Backend
-• 	Python
-• 	FastAPI
-• 	SQLite
-• 	HTTPX / Requests
-AI Layer
-• 	LLM (OpenAI-style or local model)
-• 	Prompt engineering
-• 	JSON-mode structured outputs
-Orchestration
-• 	LangChain-style agent
-• 	Tool abstractions
-• 	Config-driven workflow rules
-RPA Simulation
-• 	Python scripts
-• 	Simulated login + scraping
-• 	Logging + delays
-Frontend
-• 	Minimal chat UI (HTML/JS or Streamlit)
-• 	HR admin dashboard
+Result: Automated, traceable response with auditability.
 
-#Repository Structure
-/chatbot/               # Conversational AI layer
-/orchestrator/          # Agentic workflow engine
-/services/hr_system/    # HR microservices (PTO, profile, tickets)
-/services/rpa_sim/      # RPA bot simulation
-/admin/                 # HR admin console
-/docs/                  # Architecture diagrams, specs, case study
-README.md               # Portfolio page
+### Update Address (Multi-step Agentic Flow)
+User: “I moved — update my address to 123 Main St.”
 
-#Included Documentation
-• 	System architecture diagram
-• 	Data flow diagrams
-• 	Sequence diagrams for each workflow
-• 	Security & governance model
-• 	Component interaction map
-• 	Full case study
-• 	Demo script
+Flow:
+1. LLM extracts intent and entities
+2. Orchestrator validates address format
+3. Calls HR microservice to update the DB
+4. Calls RPA bot to update a legacy system
+5. Confirms success to user
+6. Logs user ID, systems touched, masked PII, timestamp, and outcome
 
-#Demo Script (For Recruiters & Hiring Managers)
-1. Start with the chat UI
-• 	Ask: “What’s my PTO balance?”
-• 	Show real data retrieval
-2. Run a multi-step workflow
-• 	“Request PTO from Feb 10–12.”
-• 	Show decision-making + ticket creation
-3. Update address
-• 	Demonstrate RPA bot simulation
-4. Open HR admin console
-• 	Show logs, masked PII, automation rules
-5. Trigger a failure
-• 	Show graceful fallback + escalation
+Result: Realistic simulation of API-driven and RPA-driven enterprise automation.
 
-Why This Project Matters
-This project demonstrates:
-• 	LLM integration in enterprise workflows
-• 	Agentic decision-making
-• 	API-driven automation
-• 	RPA orchestration
-• 	HR system knowledge
-• 	Data governance & security
-• 	Cross-functional thinking
-• 	End-to-end system design
-It proves readiness for roles in Intelligent Automation, AI Engineering, Conversational AI, and Enterprise Workflow Automation.
+## System Architecture
+High-level components:
+- Chat / LLM layer for user interaction and intent parsing
+- Agentic orchestrator to sequence tools and workflows
+- FastAPI microservices for HR operations and data
+- RPA simulation layer for legacy system interactions
+- SQLite for demo data persistence and audit logs
+- Admin UI for rules, logs, and governance
 
-#Next Steps (Optional Enhancements)
-• 	Integrate real ServiceNow API
-• 	Add OAuth2 authentication
-• 	Add vector search for HR knowledge base
-• 	Add analytics dashboard for HR insights
-• 	Add fine-tuned LLM for HR-specific intents
+(See /docs for diagrams and detailed component maps)
+
+## Tech Stack
+- Backend: Python, FastAPI, SQLite
+- Communication: HTTPX / requests
+- AI Layer: LLM (OpenAI-style or local models), prompt engineering
+- Orchestration: LangChain-style agent, tool abstractions
+- RPA Simulation: Python scripts with logging and delays
+- Frontend: Minimal chat UI (HTML/JS or Streamlit), HR admin dashboard
+
+## Repository Structure
+- /chatbot/               — Conversational AI layer
+- /orchestrator/          — Agentic workflow engine
+- /services/hr_system/    — HR microservices (PTO, profile, tickets)
+- /services/rpa_sim/      — RPA bot simulation
+- /admin/                 — HR admin console
+- /docs/                  — Architecture diagrams, specs, case study
+- README.md               — This file
+
+## Quickstart
+1. Clone repo:
+   git clone https://github.com/NuttyCoder/hr_agentic_automation_assistant.git
+2. Create virtualenv and install:
+   python -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+3. Start services (example):
+   - Start FastAPI microservices: `uvicorn services.hr_system.main:app --reload`
+   - Start conversational UI: open /chatbot or run streamlit if provided
+4. Seed demo data (if a seed script exists): `python scripts/seed_db.py`
+5. Use the chat UI to run sample workflows from the Demo Script.
+
+(Adjust commands according to the repository’s run scripts or Docker setup in /docs)
+
+## Included Documentation
+- System architecture diagram
+- Data flow diagrams
+- Sequence diagrams for each workflow
+- Security & governance model
+- Component interaction map
+- Full case study and demo script
+
+## Demo Script (For Recruiters & Hiring Managers)
+1. Start the chat UI and ask: “What’s my PTO balance?”
+2. Run a multi-step workflow: “Request PTO from Feb 10–12.”
+   - Show decision-making and ticket creation
+3. Update address to demonstrate RPA bot simulation
+4. Open the HR admin console to show masked PII, logs, and automation rules
+5. Trigger a failure to show graceful fallback and escalation
+
+## Why This Project Matters
+Demonstrates practical application of:
+- LLM integration in enterprise workflows
+- Agentic decision-making and tool use
+- API-driven automation plus RPA orchestration
+- Data governance and security in automated systems
+
+## Contributing
+Contributions are welcome. Please:
+1. Open an issue describing the change or feature.
+2. Fork the repo and create a branch for your patch.
+3. Submit a pull request with tests/docs where relevant.
+
+## License
+Specify your license here (e.g., MIT). If none is present, add a LICENSE file.
