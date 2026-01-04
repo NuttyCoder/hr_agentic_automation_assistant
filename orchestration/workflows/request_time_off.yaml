@@ -1,0 +1,41 @@
+id: request_time_off
+description: >
+  Handles employee PTO requests end-to-end, including profile lookup,
+  PTO balance validation, request creation, and fallback escalation.
+
+steps:
+
+  # ---------------------------------------------------------
+  # 1. Fetch employee profile
+  # ---------------------------------------------------------
+  - id: fetch_profile
+    tool: get_employee_profile
+
+  # ---------------------------------------------------------
+  # 2. Fetch PTO balance
+  # ---------------------------------------------------------
+  - id: fetch_pto_balance
+    tool: get_pto_balance
+
+  # ---------------------------------------------------------
+  # 3. Decision: Does the employee have enough PTO?
+  # ---------------------------------------------------------
+  - id: check_balance
+    type: decision
+    condition: "context.last_result.get('days_available', 0) >= context.entities.get('days_requested', 0)"
+    on_true: create_pto_request
+    on_false: escalate_to_ticket
+
+  # ---------------------------------------------------------
+  # 4A. Create PTO request (happy path)
+  # ---------------------------------------------------------
+  - id: create_pto_request
+    tool: create_pto_request
+    final: true
+
+  # ---------------------------------------------------------
+  # 4B. Escalate to HR ticket (insufficient balance)
+  # ---------------------------------------------------------
+  - id: escalate_to_ticket
+    tool: create_ticket
+    final: true
