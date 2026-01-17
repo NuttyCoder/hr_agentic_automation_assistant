@@ -35,9 +35,9 @@ This project was built to:
 - Provide a realistic example of enterprise HR automation
 
 ## Core Features
+```mermaid
 flowchart TD
-    %% Conversation Layer
-    subgraph ConversationLayer["Conversation Layer"]
+  subgraph ConversationLayer["Conversation Layer"]
         Webhook[Webhook]:::conv
         Intent[Intent Classifier]:::conv
         Agentic[HR Orchestrator Agent]:::conv
