@@ -35,6 +35,84 @@ This project was built to:
 - Provide a realistic example of enterprise HR automation
 
 ## Core Features
+flowchart TD
+    %% Conversation Layer
+    subgraph ConversationLayer["Conversation Layer"]
+        Webhook[Webhook]:::conv
+        Intent[Intent Classifier]:::conv
+        Agentic[HR Orchestrator Agent]:::conv
+    end
+
+    %% Orchestration Layer
+    subgraph OrchestrationLayer["Orchestration Layer"]
+        Runner[Workflow Runner (YAML)]:::orch
+        Context[Orchestration Context]:::orch
+        Registry[Tools Registry]:::orch
+    end
+
+    %% Services Layer
+    subgraph ServicesLayer["Services Layer"]
+        Profile[HR Profile Service]:::serv
+        PTO[PTO Service]:::serv
+        Ticket[Ticketing Service]:::serv
+        Benefits[Benefits Service]:::serv
+        Policy[Policy Service]:::serv
+        Notify[Notification Service]:::serv
+    end
+
+    %% Adapters Layer
+    subgraph AdaptersLayer["Adapters Layer"]
+        SN[ServiceNow Adapter]:::adapt
+        SF[SuccessFactors Adapter]:::adapt
+        Email[Email Client]:::adapt
+        Slack[Slack Client]:::adapt
+    end
+
+    %% RPA Layer
+    subgraph RPALayer["RPA Layer"]
+        RPAEngine[RPA Engine]:::rpa
+        AddressBot[Address Update Bot]:::rpa
+        PayrollBot[Payroll Investigation Bot]:::rpa
+    end
+
+    %% Governance Layer
+    subgraph GovernanceLayer["Governance Layer"]
+        PII[PII Masking]:::gov
+        PolicyEng[Policy Engine]:::gov
+        Audit[Audit Logger]:::gov
+        Roles[Role Permissions]:::gov
+    end
+
+    %% Connections
+    Webhook --> Intent --> Agentic
+    Agentic --> Runner --> Registry
+    Runner --> Context
+
+    Registry --> Profile
+    Registry --> PTO
+    Registry --> Ticket
+    Registry --> Benefits
+    Registry --> Policy
+    Registry --> Notify
+
+    Registry --> SN
+    Registry --> SF
+    Registry --> Email
+    Registry --> Slack
+
+    Registry --> RPAEngine
+    RPAEngine --> AddressBot
+    RPAEngine --> PayrollBot
+
+    Agentic --> GovernanceLayer
+
+    %% Styles
+    classDef conv fill=#1f77b4,stroke=#ffffff,color=#ffffff;
+    classDef orch fill=#2ca02c,stroke=#ffffff,color=#ffffff;
+    classDef serv fill=#9467bd,stroke=#ffffff,color=#ffffff;
+    classDef adapt fill=#ff7f0e,stroke=#ffffff,color=#ffffff;
+    classDef rpa fill=#17becf,stroke=#ffffff,color=#ffffff;
+    classDef gov fill=#d62728,stroke=#ffffff,color=#ffffff;
 1. Conversational AI Interface
    - Natural language understanding
    - Intent classification
@@ -72,7 +150,35 @@ This project was built to:
    - Full audit trail of actions
 
 ## Example Workflows
+sequenceDiagram
+    participant U as User
+    participant W as Webhook (Moveworks-style)
+    participant A as HR Orchestrator Agent
+    participant R as Workflow Runner
+    participant S as Services (HR Profile, PTO, Ticketing)
 
+    U->>W: Submit PTO request (dates, days_requested)
+    W->>A: Forward intent + entities
+    A->>R: Load workflow (request_time_off.yaml)
+
+    R->>S: get_employee_profile
+    S-->>R: Employee profile data
+
+    R->>S: get_pto_balance
+    S-->>R: PTO balance result
+
+    alt Enough PTO balance
+        R->>S: create_pto_request
+        S-->>R: PTO request confirmation
+        R-->>A: Final output (approved PTO)
+    else Insufficient PTO balance
+        R->>S: create_ticket
+        S-->>R: Ticket ID + escalation
+        R-->>A: Final output (escalated to HR)
+    end
+
+    A-->>W: Return response
+    W-->>U: PTO request result (approved or escalated)
 ### PTO Request
 User: “Can you tell me how much PTO I have left?”
 
